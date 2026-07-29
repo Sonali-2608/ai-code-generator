@@ -37,9 +37,9 @@ app.get('/generate-codes', async (req, res) => {
 
     res.end();
   }catch(err){
-    console.error('Error generating codes:', error);
+    console.error('Error generating codes:', err);
     if (!res.headersSent) {
-        res.status(500).json({ error: 'Failed to generate codes' });
+        res.status(500).json({ error: 'Failed to generate codes',details: err.message });
     } else {
         res.end();
     }

@@ -1,13 +1,9 @@
-// import OpenAI from "openai";
 const OpenAI = require("openai");
-const client = new OpenAI();
 
-// const response = await client.responses.create({
-//     model: "gpt-4.1",
-//     input: "Write a one-sentence bedtime story about a unicorn.",
-// });
-
-// console.log(response.output_text);
+const client = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
+});
 
 const improvementPrompt = `
 You are a professional prompt engineer.
@@ -30,7 +26,7 @@ Create a todo list app with the following features:
 
 async function improvePrompt(prompt){
     const response = await client.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "llama-3.1-8b-instant",
         messages: [
             { role: "system", content: improvementPrompt },
             { role: "user", content: prompt }
@@ -92,7 +88,7 @@ console.log('Hello world');
 
 function generateResponseStream(prompt){
     return client.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "llama-3.1-8b-instant",
         messages: [
             { role: "system", content: codeSytemPrompt },
             { role: "user", content: prompt }
